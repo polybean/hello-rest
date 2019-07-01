@@ -48,8 +48,8 @@ public class Issues {
     }
 
     @PostMapping
-    public String create() {
-        return "create";
+    public Params create(@RequestBody Params params) {
+        return params;
     }
 
     @GetMapping(path = "{id}")
