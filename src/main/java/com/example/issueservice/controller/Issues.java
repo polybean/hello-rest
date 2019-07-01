@@ -52,18 +52,18 @@ public class Issues {
         return "create";
     }
 
-    @GetMapping(path = "1")
-    public String show() {
-        return "show";
+    @GetMapping(path = "{id}")
+    public String show(@PathVariable String id) {
+        return "show" + id;
     }
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, path = "1")
-    public String update() {
-        return "update";
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, path = "{id}")
+    public String update(@PathVariable String id) {
+        return "update" + id;
     }
 
-    @DeleteMapping(path = "1")
-    public String destroy() {
-        return "destroy";
+    @DeleteMapping(path = "{id}")
+    public String destroy(@PathVariable String id) {
+        return "destroy" + id;
     }
 }
