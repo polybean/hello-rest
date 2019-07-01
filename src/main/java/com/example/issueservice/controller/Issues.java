@@ -3,29 +3,29 @@ package com.example.issueservice.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/issues")
 public class Issues {
-    @GetMapping(path = "/issues")
+    @GetMapping
     public String index() {
         return "index";
     }
 
-    @PostMapping(path = "/issues")
+    @PostMapping
     public String create() {
         return "create";
     }
 
-    @GetMapping(path = "issues/1")
+    @GetMapping(path = "1")
     public String show() {
         return "show";
     }
 
-    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, path = "/issues/1")
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, path = "1")
     public String update() {
         return "update";
     }
 
-    @DeleteMapping(path = "/issues/1")
+    @DeleteMapping(path = "1")
     public String destroy() {
         return "destroy";
     }
