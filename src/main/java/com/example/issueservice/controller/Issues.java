@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(path = "/issues")
@@ -56,6 +57,17 @@ public class Issues {
 
     @GetMapping(path = "{id}")
     public String show(@PathVariable String id) {
+        if (id.equals("13")) {
+            throw new NoSuchElementException("id = " + id);
+        }
+
+        // Let's try to create a runtime exception
+        if (id.equals("0")) {
+            int i = 2 / 0;
+            System.out.println("I am doing fantastic math, 2 / 0 = " + i);
+        }
+
+
         return "show" + id;
     }
 
