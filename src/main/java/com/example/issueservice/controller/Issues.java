@@ -2,12 +2,19 @@ package com.example.issueservice.controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping(path = "/issues")
 public class Issues {
     @GetMapping
-    public String index() {
-        return "index";
+    public Map<String, String> index(@RequestParam String author, @RequestParam int type) {
+        Map<String, String> body = new HashMap<>();
+        body.put("author", author);
+        body.put("type", String.valueOf(type));
+
+        return body;
     }
 
     @PostMapping
