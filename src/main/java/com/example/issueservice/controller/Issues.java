@@ -1,5 +1,6 @@
 package com.example.issueservice.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class Issues {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Params create(@RequestBody Params params) {
         return params;
     }
