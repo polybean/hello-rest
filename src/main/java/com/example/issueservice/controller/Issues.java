@@ -1,83 +1,47 @@
 package com.example.issueservice.controller;
 
+import com.example.issueservice.model.Issue;
+import com.example.issueservice.service.IssueService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/issues")
 public class Issues {
-    static class Params {
-        String author;
-        int type;
-
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getType() {
-            return type;
-        }
-    }
+    @Autowired
+    IssueService issueService;
 
     @GetMapping
-    public Map<String, String> index(@RequestParam String author, @RequestParam int type) {
-        Map<String, String> body = new HashMap<>();
-        body.put("author", author);
-        body.put("type", String.valueOf(type));
-
-        return body;
-    }
-
-    @GetMapping(path = "params")
-    public Map<String, String> indexUsingParamStructure(Params params) {
-        Map<String, String> body = new HashMap<>();
-        body.put("author", params.author);
-        body.put("type", String.valueOf(params.type));
-
-        return body;
+    public Iterable<Issue> index() {
+        return issueService.findAll();
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Params create(@RequestBody Params params) {
-        return params;
+    public ResponseEntity<Void> create(@RequestBody Issue issue) throws URISyntaxException {
+        UUID id = issueService.insertOne(issue);
+        return ResponseEntity.created(new URI("/issues/" + id)).build();
     }
 
     @GetMapping(path = "{id}")
-    public String show(@PathVariable String id) {
-        if (id.equals("13")) {
-            throw new NoSuchElementException("id = " + id);
-        }
-
-        // Let's try to create a runtime exception
-        if (id.equals("0")) {
-            int i = 2 / 0;
-            System.out.println("I am doing fantastic math, 2 / 0 = " + i);
-        }
-
-
-        return "show" + id;
+    public Issue show(@PathVariable UUID id) {
+        return issueService.findOne(id);
     }
 
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, path = "{id}")
-    public String update(@PathVariable String id) {
-        return "update" + id;
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody Issue issue) {
+        issueService.updateOne(id, issue);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{id}")
-    public String destroy(@PathVariable String id) {
-        return "destroy" + id;
+    public ResponseEntity<Void> destroy(@PathVariable UUID id) {
+        issueService.deleteOne(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
