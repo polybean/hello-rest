@@ -20,6 +20,15 @@ public class Issue {
     private String author;
     private int type;
 
+    public Issue(String description, String author, int type) {
+        this.description = description;
+        this.author = author;
+        this.type = type;
+    }
+
+    public Issue() {
+    }
+
     public UUID getId() {
         return id;
     }
