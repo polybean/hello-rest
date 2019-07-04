@@ -122,7 +122,7 @@ public class IssuesControllerTests {
 
         Resources<Issue> output = mapper.readValue(result, new TypeReference<Resources<Issue>>() {
         });
-        
+
         assertTrue(output.getContent().size() >= 2);
         assertTrue(output.getContent().stream().anyMatch(i ->
                 i.getDescription().equals("Make it shinny!")));
