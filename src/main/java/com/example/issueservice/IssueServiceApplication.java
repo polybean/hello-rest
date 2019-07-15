@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 
 @SpringBootApplication
@@ -23,8 +25,10 @@ public class IssueServiceApplication {
     }
 
     @GetMapping
-    public ResponseEntity<String> index() {
-        return ResponseEntity.ok("hello, world");
+    public ResponseEntity<String> index() throws UnknownHostException {
+        String hostname = InetAddress.getLocalHost().getHostName();
+
+        return ResponseEntity.ok("Goodbye, world! @" + hostname);
     }
 
 }
